@@ -1,0 +1,21 @@
+﻿h1{
+    font-size: 1.5rem;
+    margin: .5em, .75em;
+}
+
+table {
+    width: 100%;
+}
+
+@media screen and (max-width: 660px){
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+    }
+}
