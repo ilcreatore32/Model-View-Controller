@@ -1,5 +1,60 @@
-﻿@{
+﻿@model MVC.Models.DB.User
+@{
     ViewData["Title"] = "Edit User";
 }
+<h1>@ViewData["Title"] @Model.Nickname</h1>
 
-<h1>@ViewData["Title"]</h1>
+<form id="edit-form" class="create-form bg-light mt-3">
+    <input type="number" class="hidden" id="id" name="id" value="@Model.Id">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" aria-describedby="user name" value="@Model.Name">
+        <label for="nickname" class="form-label">Nickname</label>
+        <input type="text" class="form-control" id="nickname" name="nickname" aria-describedby="user nickname" value="@Model.Nickname">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="user email" value="@Model.Email">
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="tel" class="form-control" id="phone" name="phone" value="@Model.Phone">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" value="@Model.Date">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" name="location" value="@Model.Location">
+    </div>
+    <div class="mb-3">
+        <label for="state" class="form-label">State</label>
+        <select id="state" name="state" class="form-select" aria-label="user state" value="@Model.IdState">
+            <option value="@Model.IdState">Change User State</option>
+            <option value="1">Conectado</option>
+            <option value="2">Ausente</option>
+            <option value="3">Desconectado</option>
+        </select>
+    </div>
+
+    <div class="submit">
+        <a class="btn btn-outline-danger" asp-area="" asp-controller="User" asp-action="Index">Cancel</a>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+</form>
+
+@section Scripts
+{
+<script>
+    $(document).ready(function (){
+        $("#edit-form").submit(function (e){
+            e.preventDefault();
+            url = "@Url.Content("~/User/putUser")";
+            payload = $(this).serialize();
+            $.post(url, payload, function(Data){
+                if(Data=="1"){
+                    alert("User Edited!");
+                    document.location.href= "@Url.Content("~/User/Index")";
+                }else{
+                    alert(Data);
+                }
+            })
+        })
+    })
+</script>
+}

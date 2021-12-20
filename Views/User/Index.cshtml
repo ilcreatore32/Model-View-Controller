@@ -1,33 +1,54 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Users";
 }
+
+<div class="table-caption">
     <h1>@ViewData["Title"]</h1>
-    <div class="actions">
+    <div>
         <a class="btn btn-primary" asp-area="" asp-controller="User" asp-action="Create">Create</a>
-        <a class="btn btn-primary" asp-area="" asp-controller="User" asp-action="Edit">Edit</a>       
     </div>
-    <table class="table">
-        <thead class="thead-primary">
+</div>
+<table class="table bg-light">
+    <thead class="bg-primary">
+        <tr>
+            <th>User</th>
+            <th>Status</th>
+            <th>Phone</th>
+            <th>Date</th>
+            <th>Email</th>
+            <th>Location</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in (ViewData["Users"] as IEnumerable<MVC.Models.DB.User>))
+        {
             <tr>
-                <th>User</th>
-                <th>Status</th>
-                <th>Phone</th>
-                <th>Date</th>
-                <th>Email</th>
-                <th>Location</th>
+                <td>
+                    <div class="user">
+                        <div class="user-avatar">
+                            <img src="https://th.bing.com/th/id/OIP.8Di5Xe-0ty58fzXIdk_2OQHaFj?pid=ImgDet&rs=1" alt="Avatar" class="avatar" />
+                        </div>
+                        <div class="user-name">
+                            @user.Name
+                            <span class="text-muted">
+                                #@user.Nickname
+                            </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="state bg-danger"></span>
+                    @user.IdState
+                </td>
+                <td>@user.Phone</td>
+                <td>@user.Date</td>
+                <td>@user.Email</td>
+                <td>@user.Location</td>
+                <td><a class="btn btn-primary btn-edit" asp-controller="User" asp-action="Edit" asp-route-Id="@user.Id">Edit</a></td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Weishler Berman <br/><sub>#Weishler</sub></td>
-                <td>aceptado</td>
-                <td>04242029818</td>
-                <td>15/12/21</td>
-                <td>ilcreatore321@gmail.com</td>
-                <td>Caracas</td>
-            </tr>
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 

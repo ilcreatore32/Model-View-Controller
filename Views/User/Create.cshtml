@@ -1,5 +1,71 @@
 ﻿@{
     ViewData["Title"] = "Create New User";
+    ViewData["Img"] = "";
+
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<form id="create-form" class="create-form bg-light mt-3">
+    <div class="mt-3 mb-3">
+        <img id="avatar" class="avatar" />
+        <button id="get-img" type="button" class="btn btn-primary" type="button">
+            Random Image...
+        </button>
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input name="name" type="text" class="form-control" id="name" aria-describedby="user name">
+        <label for="nickname" class="form-label">Nickname</label>
+        <input name="nickname" type="text" class="form-control" id="nickname" aria-describedby="user nickname">
+        <label for="email" class="form-label">Email</label>
+        <input name="email" type="email" class="form-control" id="email" aria-describedby="user email">
+    </div>
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input name="phone" type="tel" class="form-control" id="phone">
+        <label for="date" class="form-label">Date</label>
+        <input name="date" type="date" class="form-control" id="date">
+        <label for="location" class="form-label">Location</label>
+        <input name="location" type="text" class="form-control" id="location">
+    </div>
+    <div class="submit mb-3">
+        <a class="btn btn-outline-danger" asp-area="" asp-controller="User" asp-action="Index">Cancel</a>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+</form>
+
+@section Scripts
+{
+<script>
+    $(document).ready(function (){
+        $("#create-form").submit(function (e){
+            e.preventDefault();
+            url = "@Url.Content("~/User/postUser")";
+            payload = $(this).serialize();
+            $.post(url, payload, function(Data){
+                if(Data=="1"){
+                    alert("User Created!");
+                    document.location.href= "@Url.Content("~/User/Index")";
+                }else{
+                    alert(Data);
+                }
+            })
+        })
+        $("#get-img").click(function (e){
+            console.log("Clicked!")
+            $.ajax
+            ({
+                url: "http://picsum.photos/50",
+                type: 'GET',
+                dataType: 'json',
+                success: function(data)
+                {
+                    result = data;
+                    console.log();
+                }
+            })
+        };
+    })
+</script>
+}
